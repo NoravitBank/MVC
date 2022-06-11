@@ -1,0 +1,7 @@
+Basic
+----------------------------------------------------------------
+1. Login(1)(*ใช้อะไร login), Authorization(1)  (*filter Atribute)
+2. API: Company(5), Employee(5), Department(5), Position(5)
+3. API Description: CRUD(มี 5 เส้น) + Search Data (By Linq) เฉพาะข้อ 2
+4. Postman Collection & Mock Data
+----------------------------------------------------------------
