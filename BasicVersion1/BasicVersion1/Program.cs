@@ -1,19 +1,22 @@
 global using Microsoft.EntityFrameworkCore;
-global using BasicVersion1.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Configuration;
 using System.Text;
+using BasicVersion1.EfCore;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
-builder.Services.AddDbContext<BasicVersion1.Data.DataContext>(option =>
+builder.Services.AddControllers().AddJsonOptions(o => o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+var connectionString = builder.Configuration.GetConnectionString("WorkShopDbContext");
+builder.Services.AddDbContext<WorkShopDbContext>(x =>
 {
-    option.UseSqlServer(builder.Configuration.GetConnectionString("BasicVersion1Context"));
+    x.UseSqlServer(connectionString);
 });
+
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

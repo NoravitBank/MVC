@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BasicVersion1.EfCore;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BasicVersion1.Controllers
 {
@@ -43,12 +44,10 @@ namespace BasicVersion1.Controllers
              };
 
 
-
-        private readonly DataContext _dataContext;
-
-        public EmployeeController(BasicVersion1.Data.DataContext datacontext)
+        private readonly WorkShopDbContext _dbContext;
+        public EmployeeController(WorkShopDbContext dbContext)
         {
-            _dataContext = datacontext;
+            this._dbContext = dbContext;
         }
 
 
@@ -57,7 +56,10 @@ namespace BasicVersion1.Controllers
         public async Task<ActionResult<List<Models.EMPLOYEE>>> Get()
         {
             //   return Ok(await _dataContext.EMPLOYEE.ToListAsync());
-            return Ok(Emp);
+            return Ok(await this._dbContext.EMPLOYEE.Include(i => i.Position)
+                                                    .Include(i => i.Department)
+                                                    .Include(i => i.Company).ToListAsync());
+
         }
 
         [HttpGet("{id}")]

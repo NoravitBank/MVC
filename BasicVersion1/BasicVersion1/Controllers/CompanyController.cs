@@ -26,14 +26,8 @@ namespace BasicVersion1.Controllers
             }
         };
 
-
-
-        private readonly DataContext _datacontext;
-        public CompanyController(BasicVersion1.Data.DataContext dataContext)
-        {
-            _datacontext = dataContext;
-
-        }
+        
+       
 
         [HttpGet]
         public async Task<ActionResult<List<Models.COMPANY>>> get()
