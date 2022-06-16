@@ -83,5 +83,6 @@ namespace WebApplication1.DTO
 
         public int PositionId { get; set; }
         public int DepartmentId { get; set; }
+        public int CompanyId { get; set; }
     }
 }

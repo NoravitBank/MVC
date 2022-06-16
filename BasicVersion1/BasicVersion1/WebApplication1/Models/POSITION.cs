@@ -24,7 +24,7 @@ namespace WebApplication1.Models
         [MaxLength(50)]
         [StringLength(50)]
         public string? POSITION_NAME_ENG { get; set; }
-        [JsonIgnore]
-        public List<EMPLOYEE> EMPLOYEEs { get; set; }
+    //    [JsonIgnore]
+     //   public List<EMPLOYEE> EMPLOYEEs { get; set; }
     }
 }

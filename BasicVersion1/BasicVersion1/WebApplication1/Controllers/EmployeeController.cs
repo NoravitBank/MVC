@@ -20,8 +20,12 @@ namespace WebApplication1.Controllers
         public async Task<ActionResult<List<EMPLOYEE>>> Get(int EmpId)
         {
             var employee = await _context.EMPLOYEEs.Where(e => e.EMPLOYEE_CODE == EmpId)                 
-                .Include(e => e.POSITION)                
-                .ToListAsync();           
+                .Include(e => e.POSITION)
+                .Include(e => e.DEPARTMENT)
+                .Include(e => e.COMPANY)
+                .ToListAsync();   
+            if(employee == null)
+                return NotFound();
             return employee;
         }
 
@@ -30,9 +34,47 @@ namespace WebApplication1.Controllers
         {         
             return await _context.EMPLOYEEs.Include(e => e.POSITION)
                 .Include(p => p.DEPARTMENT)
-                .Include(e => e.COMPANY)
+                .Include(p => p.COMPANY)
                 .ToListAsync();
+        }
 
+        [HttpGet("PosoitionSearch")]
+        public async Task<ActionResult<List<EMPLOYEE>>> PositionSearch(string positionName)
+        {
+            var posi = await _context.EMPLOYEEs.Where(p => p.POSITION.POSITION_NAME_THA == positionName)
+                .Include(p => p.POSITION)
+                .Include(p => p.DEPARTMENT)
+                .Include(p => p.COMPANY)
+                .ToListAsync();
+            if (posi == null)
+                return NotFound();
+            return posi;
+        }
+
+        [HttpGet("DepartmentSearch")]
+        public async Task<ActionResult<List<EMPLOYEE>>> DepartmentSearch(string departmentName)
+        {
+            var depm = await _context.EMPLOYEEs.Where(d => d.DEPARTMENT.DEPARTMENT_NAME_THA == departmentName)
+                .Include(d => d.POSITION)
+                .Include(d => d.DEPARTMENT)
+                .Include(d => d.COMPANY)
+                .ToListAsync();
+            if (depm == null)
+                return NotFound();
+            return depm;
+        }
+
+        [HttpGet("CompanySearch")]
+        public async Task<ActionResult<List<EMPLOYEE>>> CompanySearch(string CompanySearch)
+        {
+            var comp = await _context.EMPLOYEEs.Where(d => d.COMPANY.COMPANY_NAME_THA == CompanySearch)
+                .Include(c => c.POSITION)
+                .Include(c => c.DEPARTMENT)
+                .Include(c => c.COMPANY)
+                .ToListAsync();
+            if (comp == null)
+                return NotFound();
+            return comp;
         }
 
 
@@ -41,7 +83,8 @@ namespace WebApplication1.Controllers
         public async Task<ActionResult<List<EMPLOYEE>>> Create(CreateEmployeeDTO request)
         {
             var position = await _context.POSITIONs.FindAsync(request.PositionId);
-            //var department = await _context.DEPARTMENTs.FindAsync(request.DepartmentId);
+            var department = await _context.DEPARTMENTs.FindAsync(request.DepartmentId);
+            var company = await _context.COMPANYs.FindAsync(request.CompanyId);
             if (position == null)
                 return NotFound();
 
@@ -61,7 +104,8 @@ namespace WebApplication1.Controllers
                 PHONE_EMPLOYEE = request.PHONE_EMPLOYEE,
                 EMAIL = request.EMAIL,
                 POSITION = position,
-            //    DEPARTMENT =department               
+                DEPARTMENT = department,
+                COMPANY = company                         
             };
             _context.EMPLOYEEs.Add(newEmployee);
             await _context.SaveChangesAsync();            
