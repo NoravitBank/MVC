@@ -29,7 +29,9 @@ namespace WebApplication1.Controllers
         public async Task<ActionResult<List<EMPLOYEE>>> show()
         {         
             return await _context.EMPLOYEEs.Include(e => e.POSITION)
-                .Include(p => p.DEPARTMENT).ToListAsync();
+                .Include(p => p.DEPARTMENT)
+                .Include(e => e.COMPANY)
+                .ToListAsync();
 
         }
 

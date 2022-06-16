@@ -22,6 +22,98 @@ namespace WebApplication1.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("WebApplication1.Models.COMPANY", b =>
+                {
+                    b.Property<int>("COMPANY_CODE")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("COMPANY_CODE")
+                        .HasColumnOrder(1);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("COMPANY_CODE"), 1L, 1);
+
+                    b.Property<string>("COMPANY_ADDRESS")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)")
+                        .HasColumnName("COMPANY_ADDRESS")
+                        .HasColumnOrder(5);
+
+                    b.Property<string>("COMPANY_NAME_ENG")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("COMPANY_NAME_ENG")
+                        .HasColumnOrder(3);
+
+                    b.Property<string>("COMPANY_NAME_THA")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("COMPANY_NAME_THA")
+                        .HasColumnOrder(2);
+
+                    b.Property<string>("EMAIL")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("EMAIL")
+                        .HasColumnOrder(10);
+
+                    b.Property<string>("FACEBOOK_ID")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("FACEBOOK_ID")
+                        .HasColumnOrder(12);
+
+                    b.Property<string>("FAX")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("FAX")
+                        .HasColumnOrder(9);
+
+                    b.Property<string>("LINE_OFFICIAL_ID")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("LINE_OFFICIAL_ID")
+                        .HasColumnOrder(11);
+
+                    b.Property<string>("PHONE")
+                        .IsRequired()
+                        .HasMaxLength(9)
+                        .HasColumnType("varchar(9)")
+                        .HasColumnName("PHONE")
+                        .HasColumnOrder(7);
+
+                    b.Property<string>("PHONE_COMPANY")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)")
+                        .HasColumnName("PHONE_COMPANY")
+                        .HasColumnOrder(8);
+
+                    b.Property<string>("SINCE")
+                        .IsRequired()
+                        .HasMaxLength(4)
+                        .HasColumnType("varchar(4)")
+                        .HasColumnName("SINCE")
+                        .HasColumnOrder(6);
+
+                    b.Property<string>("TAX_NO")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("TAX_NO")
+                        .HasColumnOrder(4);
+
+                    b.HasKey("COMPANY_CODE");
+
+                    b.ToTable("COMPANY");
+                });
+
             modelBuilder.Entity("WebApplication1.Models.DEPARTMENT", b =>
                 {
                     b.Property<int>("DEPARTMENT_CODE")
@@ -71,6 +163,9 @@ namespace WebApplication1.Migrations
                         .HasColumnType("varchar(10)")
                         .HasColumnName("BLOOD_TYPE")
                         .HasColumnOrder(12);
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
 
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
@@ -156,6 +251,8 @@ namespace WebApplication1.Migrations
 
                     b.HasKey("EMPLOYEE_CODE");
 
+                    b.HasIndex("CompanyId");
+
                     b.HasIndex("DepartmentId");
 
                     b.HasIndex("PositionId");
@@ -194,8 +291,14 @@ namespace WebApplication1.Migrations
 
             modelBuilder.Entity("WebApplication1.Models.EMPLOYEE", b =>
                 {
-                    b.HasOne("WebApplication1.Models.DEPARTMENT", null)
+                    b.HasOne("WebApplication1.Models.COMPANY", "COMPANY")
                         .WithMany("EMPLOYEEs")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebApplication1.Models.DEPARTMENT", "DEPARTMENT")
+                        .WithMany()
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -206,10 +309,14 @@ namespace WebApplication1.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("COMPANY");
+
+                    b.Navigation("DEPARTMENT");
+
                     b.Navigation("POSITION");
                 });
 
-            modelBuilder.Entity("WebApplication1.Models.DEPARTMENT", b =>
+            modelBuilder.Entity("WebApplication1.Models.COMPANY", b =>
                 {
                     b.Navigation("EMPLOYEEs");
                 });

@@ -99,5 +99,9 @@ namespace WebApplication1.Models
         public DEPARTMENT DEPARTMENT { get; set; }
         [JsonIgnore]
         public int DepartmentId { get; set; }
+
+        public COMPANY COMPANY { get; set; }
+        [JsonIgnore]
+        public int CompanyId { get; set; }
     }
 }

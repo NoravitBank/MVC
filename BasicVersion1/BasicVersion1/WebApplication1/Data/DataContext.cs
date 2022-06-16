@@ -11,6 +11,7 @@ namespace WebApplication1.Data
         public DbSet<EMPLOYEE> EMPLOYEEs { get; set; }
         public DbSet<POSITION> POSITIONs { get; set; }
         public DbSet<DEPARTMENT> DEPARTMENTs { get; set; }
+        public DbSet<COMPANY> COMPANYs{ get; set; }
 
     }
 }
