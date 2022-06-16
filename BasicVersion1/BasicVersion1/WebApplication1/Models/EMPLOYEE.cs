@@ -92,12 +92,12 @@ namespace WebApplication1.Models
         //-------------------------------------------------
      //   [JsonIgnore]
         public POSITION POSITION { get; set; }
-     //   [JsonIgnore]
+        [JsonIgnore]
         public int PositionId { get; set; }
 
      //   [JsonIgnore]
         public DEPARTMENT DEPARTMENT { get; set; }
-     //   [JsonIgnore]
+        [JsonIgnore]
         public int DepartmentId { get; set; }
     }
 }

@@ -24,7 +24,7 @@ namespace WebApplication1.Models
         [StringLength(50)]
         public string? DEPARTMENT_NAME_ENG { get; set; }
 
-         public List<EMPLOYEE> EMPLOYEEs { get; set; }
+         //public List<EMPLOYEE> EMPLOYEEs { get; set; }
 
     }
 }

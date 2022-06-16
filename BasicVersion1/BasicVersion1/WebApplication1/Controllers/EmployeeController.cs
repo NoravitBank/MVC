@@ -28,7 +28,8 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public async Task<ActionResult<List<EMPLOYEE>>> show()
         {         
-            return await _context.EMPLOYEEs.Include(e => e.POSITION).ToListAsync();
+            return await _context.EMPLOYEEs.Include(e => e.POSITION)
+                .Include(p => p.DEPARTMENT).ToListAsync();
 
         }
 
